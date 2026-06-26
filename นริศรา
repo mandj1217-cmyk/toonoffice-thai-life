@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THAI LIFE: นริศรา เรืองประภา - เกมจำลองชีวิตที่คุณกำหนด</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&family=Prompt:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --color-primary: #4A90E2; /* น้ำเงินคราม */
+            --color-secondary: #F5A623; /* ส้มทอง */
+            --color-accent: #7ED321; /* เขียวอ่อน */
+            --color-neutral-dark: #333333; /* เทาเข้ม */
+            --color-neutral-light: #F9F9F9; /* เทาอ่อน */
+            --color-white: #FFFFFF;
+            --font-heading: 'Sarabun', sans-serif;
+            --font-body: 'Prompt', sans-serif;
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            line-height: 1.6;
+            color: var(--color-neutral-dark);
+            background-color: var(--color-neutral-light);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 700; margin-bottom: 0.5em; }
+        h1 { font-size: 3.5em; color: var(--color-white); }
+        h2 { font-size: 2.2em; color: var(--color-primary); text-align: center; }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        
+        section {
+            padding: 60px 0;
+            background-color: var(--color-white);
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-light);
+        }
+
+        /* Navbar */
+        .navbar { background-color: var(--color-white); padding: 15px 0; box-shadow: var(--shadow-light); position: sticky; top: 0; z-index: 1000; }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+        .navbar-brand { font-family: var(--font-heading); font-weight: 700; font-size: 1.8em; color: var(--color-primary); text-decoration: none; }
+        .nav-links { list-style: none; display: flex; }
+        .nav-links li { margin-left: 25px; }
+        .nav-links a { color: var(--color-neutral-dark); text-decoration: none; font-size: 1em; font-weight: bold; }
+        .nav-links a:hover { color: var(--color-secondary); }
+
+        /* Hero / Header Game */
+        .hero-section {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #6A67ED 100%);
+            color: var(--color-white);
+            text-align: center;
+            padding: 80px 20px;
+            border-radius: 0;
+        }
+        .subhead { font-size: 1.3em; color: rgba(255,255,255,0.8); margin-bottom: 25px; }
+
+        /* แผงควบคุมและสถานะสไตล์ BitLife */
+        .game-dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; background: #f1f2f6; padding: 20px; border-radius: 12px; }
+        .stat-card { background: white; padding: 12px; border-radius: 8px; box-shadow: var(--shadow-light); font-size: 13px; font-weight: bold; display: flex; justify-content: space-between; }
+        .stat-card span { color: var(--color-primary); }
+
+        /* ระบบความสัมพันธ์ */
+        .relation-box { background: #fff0f2; border: 1px solid #ffccd5; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .rel-row { display: flex; justify-content: space-between; align-items: center; background: white; padding: 8px 12px; border-radius: 6px; margin-bottom: 8px; font-size: 13px; }
+        .rel-bar { width: 100px; background: #e0e0e0; height: 8px; border-radius: 4px; overflow: hidden; }
+        .rel-fill { background: #ff4757; height: 100%; transition: 0.3s; }
+
+        /* พื้นที่เนื้อเรื่องหลักและช้อยส์ตัวเลือก */
+        .story-container { background: #fdfdfd; border-left: 6px solid var(--color-primary); padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: var(--shadow-light); }
+        .story-p { font-size: 15px; color: #444; line-height: 1.7; margin-bottom: 15px; white-space: pre-line; }
+        
+        /* ปุ่มตัวเลือก */
+        .choice-btn { display: block; width: 100%; background: var(--color-primary); color: white; border: none; padding: 14px; margin-bottom: 10px; border-radius: 30px; font-family: var(--font-body); font-size: 13px; cursor: pointer; text-align: left; transition: 0.2s; padding-left: 25px; }
+        .choice-btn:hover { background: var(--color-neutral-dark); transform: translateY(-2px); }
+
+        /* ปุ่มเพิ่มอายุหลัก */
+        .age-up-btn { background-color: var(--color-secondary); color: white; padding: 15px 40px; border-radius: 50px; border: none; font-size: 1.2em; font-weight: 700; cursor: pointer; transition: 0.3s; width: 100%; margin-bottom: 20px; box-shadow: var(--shadow-medium); }
+        .age-up-btn:hover { background-color: var(--color-accent); transform: scale(1.02); }
+
+        /* เมนูกิจกรรมอิสระ */
+        .activities-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .act-btn { background: white; border: 1px solid #ced6e0; padding: 12px; border-radius: 30px; font-family: var(--font-body); font-size: 12px; cursor: pointer; font-weight: bold; transition: 0.2s; text-align: center; }
+        .act-btn:hover { background: var(--color-neutral-light); border-color: var(--color-primary); }
+
+        /* กล่องประวัติการเดินชีวิตด้านล่าง */
+        .log-terminal { background: #2f3542; color: #a4b0be; padding: 15px; border-radius: 10px; max-height: 130px; overflow-y: auto; font-size: 12px; font-family: monospace; }
+
+        .footer { background-color: var(--color-neutral-dark); color: var(--color-white); padding: 30px 0; text-align: center; margin-top: auto; border-top-left-radius: 12px; border-top-right-radius: 12px; }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5em; }
+            .activities-panel { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="navbar-brand">THAI LIFE</a>
+            <ul class="nav-links">
+                <li><a href="#game-section">ระบบจำลองชีวิต</a></li>
+                <li><a href="#contact">ติดต่อเรา</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="hero-section" class="hero-section">
+        <div class="container">
+            <h1>นริศรา เรืองประภา</h1>
+            <p class="subhead">เรื่องราวชีวิตที่ผันผวนที่คุณเป็นคนกุมชะตาชีวิตตัวเอง</p>
+            <p style="color: rgba(255,255,255,0.9); font-size: 14px;">ร่วมสัมผัสวงจรชีวิตจำลองสไตล์ BitLife ของเด็กสาวต่างจังหวัด มุ่งสู่ความฝันในเมืองหลวง</p>
+        </div>
+    </section>
+
+    <section id="game-section" class="container">
+        <h2>🎮 แผงควบคุมระบบจำลองชีวิต THAI LIFE</h2>
+        <p style="text-align:center; color:#747d8c; margin-bottom: 25px; font-size:13px;">กดปุ่มด้านล่างเพื่อเริ่มจุติชะตาชีวิต หรือกดเพิ่มอายุเพื่อเดินหน้าต่อ</p>
+
+        <div class="game-dashboard">
+            <div class="stat-card">👤 ชื่อ: <span id="p-name">นริศรา</span></div>
+            <div class="stat-card">⏳ อายุ: <span id="p-age">0</span> ปี</div>
+            <div class="stat-card">💰 เงินทุน: <span id="p-money" style="color:#7ED321;">0</span> ฿</div>
+            <div class="stat-box" style="font-size:13px; font-weight:bold;">👔 อาชีพ: <span id="p-job" style="color:#F5A623;">ทารก</span></div>
+            <div class="stat-card">❤️ พลังชีวิต: <span id="p-health">100</span>%</div>
+            <div class="stat-card">🧠 ความฉลาด: <span id="p-smarts">50</span>%</div>
+            <div class="stat-card">✨ หน้าตา: <span id="p-looks">55</span>%</div>
+        </div>
+
+        <div class="relation-box">
+            <div style="font-weight:bold; font-size:13px; color:#d63031; margin-bottom:10px;"><i class="fa-solid fa-users"></i> สายสัมพันธ์ครอบครัว (เรืองประภา)</div>
+            <div id="relation-list">
+                <p style="font-size:11px; color:#747d8c; text-align:center; margin:0;">กรุณากดปุ่มสุ่มเกิดใหม่เพื่อสร้างเครือญาติ</p>
+            </div>
+        </div>
+
+        <div id="action-trigger-area">
+            <button class="age-up-btn" onclick="startGame()">✨ สุ่มเกิดใหม่เป็น นริศรา (0 ขวบ) ✨</button>
+        </div>
+
+        <div class="story-container">
+            <div class="story-p" id="text-display">ยินดีต้อนรับสู่โหมดบอร์ดเกมชีวิตจำลอง! กดปุ่มจุติสุ่มเกิดด้านบนเพื่อเขียนเรื่องราวของ นริศรา เรืองประภา ในแบบของคุณกันเลยค่ะ!</div>
+            <div id="options-holder"></div>
+        </div>
+
+        <div style="font-weight:bold; font-size:14px; margin-top:20px; border-bottom:1px solid #ddd; padding-bottom:5px;"><i class="fa-solid fa-list-check"></i> เมนูกิจกรรมอิสระประจำปี</div>
+        <div class="activities-panel">
+            <button class="act-btn" onclick="triggerMenuActivity('lottery')">🛕 ไปวัดขูดเลขเด็ดเสี่ยงดวง (-100 ฿)</button>
+            <button class="act-btn" onclick="triggerMenuActivity('makeup')">🏥 เข้าสถาบันเสริมความงามอัปหน้าตา (-4,000 ฿)</button>
+            <button class="act-btn" onclick="triggerMenuActivity('read')">📚 ติวหนังสือสอบที่ห้องสมุดประชาชน (เพิ่มความฉลาด)</button>
+            <button class="act-btn" onclick="triggerMenuActivity('mookrata')">🍲 เลี้ยงหมูกระทะสานสัมพันธ์ครอบครัว (-400 ฿)</button>
+        </div>
+
+        <p style="font-weight: bold; margin: 20px 0 5px 0; font-size: 13px; color: var(--color-neutral-dark);"><i class="fa-solid fa-clock-rotate-left"></i> บันทึกเหตุการณ์ชีวิตที่ผ่านมา:</p>
+        <div class="log-terminal" id="history-logger">...ระบบสแตนด์บาย...</div>
+    </section>
+
+    <footer id="contact" class="footer">
+        <div class="container">
+            <h3>THAI LIFE</h3>
+            <p>เกมจำลองชีวิตสัญชาติไทยที่ทุกทางเลือกกำหนดโดยตัวคุณ</p>
+            <p>© 2026 THAI LIFE. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        let gameState = { age: 0, money: 0, health: 100, smarts: 50, looks: 55, job: "ยังไม่จุติ" };
+        let familyMembers = [];
+        let choiceLock = false;
+
+        function updateDisplayDashboard() {
+            document.getElementById("p-age").innerText = gameState.age;
+            document.getElementById("p-money").innerText = gameState.money.toLocaleString();
+            document.getElementById("p-health").innerText = gameState.health;
+            document.getElementById("p-smarts").innerText = gameState.smarts;
+            document.getElementById("p-looks").innerText = gameState.looks;
+            document.getElementById("p-job").innerText = gameState.job;
+
+            // วาดแถวความสัมพันธ์ญาติพี่น้อง
+            const relList = document.getElementById("relation-list");
+            if (familyMembers.length === 0) {
+                relList.innerHTML = `<p style="font-size:11px; color:#747d8c; text-align:center; margin:0;">ไม่มีข้อมูลญาติ</p>`;
+                return;
+            }
+            let html = "";
+            familyMembers.forEach(f => {
+                html += `
+                    <div class="rel-row">
+                        <span><strong>${f.role}</strong> (${f.name})</span>
+                        <div style="display:flex; align-items:center;">
+                            <span style="margin-right:8px; font-weight:bold;">${f.bond}%</span>
+                            <div class="rel-bar"><div class="rel-fill" style="width: ${f.bond}%"></div></div>
+                        </div>
+                    </div>`;
+            });
+            relList.innerHTML = html;
+        }
+
+        function appendLog(text) {
+            const logger = document.getElementById("history-logger");
+            logger.innerHTML += `<div>📍 [${gameState.age} ขวบ]: ${text}</div>`;
+            logger.scrollTop = logger.scrollHeight;
+        }
+
+        function startGame() {
+            gameState = { age: 0, money: 500, health: 90, smarts: 60, looks: 65, job: "เด็กแบเบาะ" };
+            familyMembers = [
+                { role: "พ่อ (เสาหลักบ้าน)", name: "สมวิทย์ เรืองประภา", bond: 60 },
+                { role: "แม่ (แม่ค้าขนม)", name: "นวลนภา เรืองประภา", bond: 70 }
+            ];
+            choiceLock = false;
+            document.getElementById("p-name").innerText = "นริศรา";
+            document.getElementById("history-logger").innerHTML = "<div>✨ นริศรา ลืมตาดูโลกในตระกูลเรืองประภา</div>";
+            
+            document.getElementById("text-display").innerText = `👶 [นริศรา เรืองประภา - ลืมตาดูโลก]\n\nคุณเกิดในครอบครัวชนชั้นกลางในต่างจังหวัดอันเงียบสงบ พ่อทำงานโรงงาน ส่วนแม่ทำขนมไทยขายส่งในตลาดสด`;
+            document.getElementById("options-holder").innerHTML = "";
+
+            document.getElementById("action-trigger-area").innerHTML = `
+                <button class="age-up-btn" onclick="advanceAgeOneYear()">⚡ เพิ่มอายุชะตาชีวิต (+1 ปี) ⚡</button>
+            `;
+            updateDisplayDashboard();
+        }
+
+        function advanceAgeOneYear() {
+            if (choiceLock) {
+                alert("กรุณาตัดสินใจเลือกทางเดินในเหตุการณ์ปีนี้ก่อนค่ะ!");
+                return;
+            }
+            gameState.age += 1;
+            
+            // ปล่อยเงินปันผล/ค่าขนมรายปีตามช่วงอายุและอาชีพ
+            let income = 100;
+            if (gameState.job === "นักเรียนทุน") income = 1000;
+            if (gameState.job === "พนักงานออฟฟิศ") income = 22000;
+            if (gameState.job === "ผู้บริหารแบรนด์") income = 75000;
+            gameState.money += income;
+
+            // สุ่มความสัมพันธ์ครอบครัวผันผวนตามกาลเวลา
+            familyMembers.forEach(f => {
+                f.bond = Math.max(0, Math.min(100, f.bond + (Math.floor(Math.random() * 11) - 5)));
+            });
+
+            document.getElementById("options-holder").innerHTML = "";
+            processTimelineStory();
+        }
+
+        // ระบบทางเลือกชีวิตหลักตามอายุแบบฉบับ BitLife
+        function processTimelineStory() {
+            choiceLock = true;
+
+            if (gameState.age === 1) {
+                document.getElementById("text-display").innerText = `🍼 [อายุ 1 ขวบ - วัยกำลังคลาน]\n\nแม่เอาทองหยิบทองหยอดฝีมือตัวเองมาวางล่อตรงหน้าเพื่อทดสอบปฏิภาณไหวพริบของนริศราในวัยทารก`;
+                document.getElementById("options-holder").innerHTML = `
+                    <button class="choice-btn" onclick="executeEventChoice(0, 5, 5, 'คลานไปหยิบกินอย่างน่าเอ็นดู พ่อแม่หัวเราะชอบใจในความฉลาดแกมโกง')">1. คลานเข้าไปตะครุบทองหยิบเข้าปากทันที</button>
+                    <button class="choice-btn" onclick="executeEventChoice(0, -5, 0, 'ปัดจานขนมคว่ำกระจายกระจาย โดนแม่ตีมือเพียะเบาๆ ข้อหาซน')">2. ปัดจานขนมคว่ำกระจาย ร้องไห้จ้าสะใจ</button>
+                `;
+            }
+            else if (gameState.age === 15) {
+                gameState.job = "นักเรียนมัธยมปลาย";
+                document.getElementById("text-display").innerText = `🎒 [อายุ 15 ปี - หัวเลี้ยวหัวต่อ ม.ปลาย]\n\nคุณต้องตัดสินใจเลือกสายการเรียนที่จะส่งผลต่อวิถีชีวิตและการหางานทำในอนาคตที่เมืองหลวง`;
+                document.getElementById("options-holder").innerHTML = `
+                    <button class="choice-btn" onclick="executeEventChoice(0, 0, 20, 'เลือกเรียนสายสามัญ (วิทย์-คณิต) มุ่งมั่นปั่นเกรดเพื่อสอบเข้ามหาลัยชั้นนำ', 'นักเรียนทุน')">1. มุ่งสายวิทย์-คณิต ทุ่มเทอ่านหนังสือโต้รุ่ง</button>
+                    <button class="choice-btn" onclick="executeEventChoice(1000, -5, -5, 'เลือกสายอาชีพ (ปวช.) หางานทำพาร์ทไทม์ส่งเงินช่วยแม่ทันที ได้เงินทุนเพิ่ม', 'เด็กฝึกงานสู้ชีวิต')">2. มุ่งสายอาชีพ แอบไปทำงานพาร์ทไทม์ร้านสะดวกซื้อ</button>
+                `;
+            }
+            else if (gameState.age === 22) {
+                document.getElementById("text-display").innerText = `🏙️ [อายุ 22 ปี - มุ่งสู่เมืองหลวง กรุงเทพมหานคร]\n\nคุณเรียนจบและเดินทางเข้ากรุงเทพฯ ด้วยรถทัวร์ มีบริษัทใหญ่เรียกตัวไปสัมภาษณ์งานตำแหน่งสำคัญ`;
+                document.getElementById("options-holder").innerHTML = `
+                    <button class="choice-btn" onclick="executeEventChoice(15000, 0, 10, 'สอบผ่านฉลุย ได้นั่งเก้าอี้พนักงานออฟฟิศย่านสีลมมาดมั่น!', 'พนักงานออฟฟิศ')">1. ตั้งใจทำข้อสอบสัมภาษณ์อย่างสุขุมด้วยความรู้ที่มี</button>
+                    <button class="choice-btn" onclick="executeEventChoice(0, -15, 0, 'ไปห้องสัมภาษณ์สายเพราะหลงทางทางด่วน เครียดสะสมหนักมากและชวดงานใหญ่')">2. ตื่นเต้นจนท้องเสีย นอนจมกองไข้ไปสัมภาษณ์ไม่ทัน</button>
+                `;
+            }
+            else {
+                // ปีสุ่มดราม่าชีวิตทั่วไป
+                triggerRandomThaiDrama();
+            }
+        }
+
+        function triggerRandomThaiDrama() {
+            let dice = Math.random();
+            if (dice < 0.35) {
+                document.getElementById("text-display").innerText = `⛈️ [เหตุการณ์รายปี - อายุ ${gameState.age} ปี]\n\nน้ำท่วมขังรอการระบายในกรุงเทพฯ สูงมิดล้อรถ ทะลักเข้าท่วมห้องเช่าชั้นล่างของคุณจอมกระจุย`;
+                document.getElementById("options-holder").innerHTML = `
+                    <button class="choice-btn" onclick="executeEventChoice(-500, -10, 0, 'วิดน้ำยันสว่าง ข้าวของเสียหายบางส่วนแถมเท้าเปื่อยคันคะเยอ')">1. ลุกขึ้นมาจับไม้กวาดวิดน้ำออกจากห้องทั้งคืน</button>
+                    <button class="choice-btn" onclick="executeEventChoice(-2000, 5, 0, 'หนีไปเปิดโรงแรมนอนตากแอร์ฉ่ำๆ สบายตัวแต่เงินปลิวหายวับ')">2. ช่างมัน ย้ายของขึ้นที่สูงแล้วหนีไปเปิดแฟลตนอนชั้นบน</button>
+                `;
+            } else if (dice < 0.7) {
+                let primaryRelative = familyMembers[0] ? familyMembers[0].name : "ญาติสนิท";
+                document.getElementById("text-display").innerText = `📞 [โทรศัพท์จากทางบ้าน - อายุ ${gameState.age} ปี]\n\n[${primaryRelative}] โทรมาสายตรงจากต่างจังหวัด บอกว่าช่วงนี้เศรษฐกิจฝืดเคือง อยากขอยืมเงินไปหมุนจ่ายค่าน้ำไฟ`;
+                document.getElementById("options-holder").innerHTML = `
+                    <button class="choice-btn" onclick="modifyFamilyBondAndResolve(400, 25, 'โอนเงินช่วยทางบ้านทันที พ่อแม่ปลื้มใจในความกตัญญูของนริศรา')">1. โอนเงินช่วยเหลือครอบครัวเร่งด่วน (-400 ฿)</button>
+                    <button class="choice-btn" onclick="modifyFamilyBondAndResolve(0, -20, 'ปฏิเสธไปน้ำตาซึมเพราะเราก็กรอบเหมือนกัน บรรยากาศครอบครัวตึงเครียดขึ้น')">2. บอกปัดไปตรงๆ ว่าเดือนนี้หนูก็หมุนเงินไม่ทันเหมือนกัน</button>
+                `;
+            } else {
+                document.getElementById("text-display").innerText = `🛵 [สถานการณ์บนท้องถนน - อายุ ${gameState.age} ปี]\n\nคุณกำลังเดินข้ามทางม้าลายกลางเมืองหลวง แต่มีแมสเซนเจอร์ซิ่งมอเตอร์ไซค์ย้อนศรฝ่าไฟแดงมาอย่างเร็ว!`;
+                document.getElementById("options-holder").innerHTML = `
+                    <button class="choice-btn" onclick="executeEventChoice(0, 10, 0, 'กระโดดหลบสไตล์แมทริกซ์ได้อย่างหวุดหวิด รอดตายหวุดหวิดใจหายคว่ำ')">1. กระโดดสปริงตัวหลบลงข้างทางทันควัน</button>
+                    <button class="choice-btn" onclick="executeEventChoice(0, -25, 0, 'โดนเฉี่ยวล้มก้นกระแทกพื้นฟกช้ำดำเขียว ถลอกปอกเปิกไปทั้งตัว (-25% พลังชีวิต)')">2. ยืนอึ้งยืนแข็งทื่อทำอะไรไม่ถูก</button>
+                `;
+            }
+        }
+
+        function executeEventChoice(moneyDelta, healthDelta, smartsDelta, outcomeText, newJob = null) {
+            choiceLock = false;
+            document.getElementById("options-holder").innerHTML = "";
+
+            gameState.money = Math.max(0, gameState.money + moneyDelta);
+            gameState.health = Math.max(0, Math.min(100, gameState.health + healthDelta));
+            gameState.smarts = Math.max(0, Math.min(100, gameState.smarts + smartsDelta));
+            if (newJob) gameState.job = newJob;
+
+            document.getElementById("text-display").innerText = `🎬 [ผลลัพธ์การตัดสินใจ]:\n\n${outcomeText}`;
+            appendLog(outcomeText);
+
+            if (gameState.health <= 0) handleGameOver();
+            updateDisplayDas
