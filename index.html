@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THAI LIFE: นริศรา เรืองประภา - เกมจำลองชีวิตในแบบฉบับไทย</title>
+    <title>THAI LIFE: นริศรา เรืองประภา - เรื่องราวชีวิตที่คุณกำหนด</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&family=Prompt:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
-            --color-gold: #FFD700;
-            --color-brown-dark: #8B4513;
-            --color-blue-light: #ADD8E6;
-            --color-beige: #F5F5DC;
-            --color-text-dark: #333333;
+            --color-primary: #4CAF50; /* เขียวอ่อน */
+            --color-secondary: #8BC34A; /* เขียวมะนาว */
+            --color-accent: #FFC107; /* เหลืองอำพัน */
+            --color-text-dark: #333333; /* เทาเข้ม */
+            --color-background-light: #F5F5F5; /* เทาอ่อนมาก */
             --color-white: #FFFFFF;
 
             --font-heading: 'Sarabun', sans-serif;
             --font-body: 'Prompt', sans-serif;
 
-            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.12);
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -34,9 +34,9 @@
 
         body {
             font-family: var(--font-body);
-            line-height: 1.7;
+            line-height: 1.6;
             color: var(--color-text-dark);
-            background-color: var(--color-beige);
+            background-color: var(--color-background-light);
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
@@ -45,7 +45,7 @@
 
         h1, h2, h3, h4, h5, h6 {
             font-family: var(--font-heading);
-            color: var(--color-brown-dark);
+            color: var(--color-text-dark);
             margin-bottom: 0.8em;
             font-weight: 700;
         }
@@ -56,22 +56,15 @@
         p { margin-bottom: 1em; }
 
         .container {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 0 25px;
+            padding: 0 20px;
         }
 
         section {
             padding: 80px 0;
             position: relative;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
+            overflow: hidden;
         }
 
         /* Navigation Bar */
@@ -94,13 +87,13 @@
             font-family: var(--font-heading);
             font-weight: 700;
             font-size: 1.8em;
-            color: var(--color-brown-dark);
+            color: var(--color-primary);
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         .navbar-brand:hover {
-            color: var(--color-gold);
+            color: var(--color-secondary);
         }
 
         .nav-links {
@@ -115,7 +108,7 @@
         .nav-links a {
             font-family: var(--font-body);
             font-weight: 400;
-            color: var(--color-brown-dark);
+            color: var(--color-text-dark);
             text-decoration: none;
             font-size: 1.1em;
             position: relative;
@@ -129,409 +122,257 @@
             bottom: -5px;
             width: 0;
             height: 2px;
-            background-color: var(--color-gold);
+            background-color: var(--color-accent);
             transition: width 0.3s ease;
         }
 
         .nav-links a:hover {
-            color: var(--color-gold);
+            color: var(--color-accent);
         }
 
         .nav-links a:hover::after {
             width: 100%;
         }
 
-        .navbar .auth-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-family: var(--font-body);
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            font-size: 1em;
-            border: none;
-        }
-
-        .btn-primary {
-            background-color: var(--color-gold);
-            color: var(--color-white);
-            box-shadow: var(--shadow-light);
-        }
-
-        .btn-primary:hover {
-            background-color: #e6b800; /* Darker gold */
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .btn-secondary {
-            background-color: var(--color-blue-light);
-            color: var(--color-brown-dark);
-            box-shadow: var(--shadow-light);
-        }
-
-        .btn-secondary:hover {
-            background-color: #9ac9e0; /* Darker light blue */
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-medium);
-        }
-
         /* Hero Section */
         .hero-section {
-            background: linear-gradient(135deg, var(--color-beige) 0%, var(--color-blue-light) 100%);
-            color: var(--color-brown-dark);
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: var(--color-white);
             text-align: center;
-            padding: 120px 25px 80px;
-            min-height: 85vh;
+            padding: 100px 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            left: -50px;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, var(--color-gold) 0%, rgba(255,215,0,0) 70%);
-            opacity: 0.1;
-            animation: moveLight1 15s infinite alternate ease-in-out;
-        }
-
-        .hero-section::after {
-            content: '';
-            position: absolute;
-            bottom: -50px;
-            right: -50px;
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(circle, var(--color-brown-dark) 0%, rgba(139,69,19,0) 70%);
-            opacity: 0.05;
-            animation: moveLight2 18s infinite alternate-reverse ease-in-out;
-        }
-
-        @keyframes moveLight1 {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(50px, 50px) scale(1.1); }
-            100% { transform: translate(0, 0) scale(1); }
-        }
-
-        @keyframes moveLight2 {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-40px, -40px) scale(1.05); }
-            100% { transform: translate(0, 0) scale(1); }
+            min-height: 80vh;
         }
 
         .hero-section h1 {
-            color: var(--color-brown-dark);
+            color: var(--color-white);
             margin-bottom: 15px;
             font-size: 4.8em;
-            text-shadow: 3px 3px 8px rgba(0,0,0,0.15);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
         }
 
         .hero-section .subhead {
-            font-family: var(--font-body);
-            font-weight: 400;
             font-size: 1.6em;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+        }
+
+        .character-image-hero {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid var(--color-accent);
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-medium);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .character-image-hero:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .btn-primary {
+            background-color: var(--color-accent);
+            color: var(--color-text-dark);
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow-light);
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: #FFD740; /* เหลืองเข้มขึ้น */
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* About Narisara Section */
+        #about-narisara {
+            background-color: var(--color-white);
+            padding: 80px 0;
+            box-shadow: var(--shadow-light);
+            text-align: center;
+        }
+
+        #about-narisara h2 {
+            margin-bottom: 20px;
+            font-size: 3em;
+            color: var(--color-primary);
+        }
+
+        #about-narisara .subhead {
+            font-size: 1.3em;
             margin-bottom: 40px;
             color: var(--color-text-dark);
             max-width: 800px;
-        }
-
-        .hero-character-image {
-            width: 100%;
-            max-width: 550px;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: var(--shadow-medium);
-            margin-top: 40px;
-            animation: floatImage 6s ease-in-out infinite;
-        }
-
-        @keyframes floatImage {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-
-        /* Character Section */
-        .character-section {
-            background-color: var(--color-white);
-            padding: 80px 0;
-            text-align: center;
-            box-shadow: inset 0 8px 15px -8px rgba(0,0,0,0.05), inset 0 -8px 15px -8px rgba(0,0,0,0.05);
-        }
-
-        .character-section h2 {
-            color: var(--color-gold);
-            margin-bottom: 10px;
-            font-size: 3em;
-        }
-
-        .character-section .subhead {
-            font-size: 1.3em;
-            margin-bottom: 50px;
-            color: var(--color-text-dark);
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .character-details {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 40px;
+            gap: 30px;
             margin-top: 40px;
         }
 
-        .character-info {
-            flex: 1 1 300px;
-            background-color: var(--color-beige);
+        .detail-card {
+            background-color: var(--color-background-light);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: left;
+            box-shadow: var(--shadow-light);
+            width: calc(33% - 20px); /* 3 cards per row */
+            min-width: 280px; /* Ensure responsiveness */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .detail-card .icon {
+            font-size: 2.5em;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            background-color: var(--color-white);
+            border-radius: 50%;
+            padding: 10px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .detail-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: var(--color-text-dark);
+        }
+
+        .detail-card p {
+            font-size: 1.1em;
+            color: var(--color-text-dark);
+        }
+
+        /* Additional Details Section */
+        #additional-details {
+            background-color: var(--color-background-light);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        #additional-details h2 {
+            margin-bottom: 20px;
+            font-size: 3em;
+            color: var(--color-secondary);
+        }
+
+        #additional-details .subhead {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            color: var(--color-text-dark);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .game-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            background-color: var(--color-white);
             border-radius: 15px;
             padding: 30px;
             box-shadow: var(--shadow-light);
             text-align: left;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            min-width: 280px;
-            max-width: 450px;
         }
 
-        .character-info:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .character-info h3 {
-            color: var(--color-brown-dark);
-            font-size: 2.5em;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .character-info ul {
-            list-style: none;
-            padding: 0;
-            margin-top: 20px;
-        }
-
-        .character-info li {
-            font-family: var(--font-body);
-            font-size: 1.15em;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: flex-start;
-            line-height: 1.5;
-            color: var(--color-text-dark);
-        }
-
-        .character-info li strong {
-            color: var(--color-brown-dark);
-            min-width: 90px; /* เพื่อจัดแนวข้อความ */
-            margin-right: 10px;
-            font-weight: 700;
-        }
-
-        .character-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 50px;
-        }
-
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 10px;
-            box-shadow: var(--shadow-light);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-
-        .gallery-item:hover {
+        .feature-item:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-medium);
         }
 
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            color: var(--color-white);
+        .feature-item .icon {
+            font-size: 2.5em;
+            color: var(--color-secondary);
+            margin-bottom: 15px;
+            background-color: var(--color-background-light);
+            border-radius: 50%;
+            padding: 10px;
+            width: 60px;
+            height: 60px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: var(--font-body);
-            font-size: 1.2em;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
-        }
-
-        /* About Game Section */
-        .about-game-section {
-            background: linear-gradient(135deg, var(--color-blue-light) 0%, var(--color-beige) 100%);
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .about-game-section h2 {
-            color: var(--color-brown-dark);
+        .feature-item h3 {
+            font-size: 1.5em;
             margin-bottom: 10px;
-            font-size: 3em;
-        }
-
-        .about-game-section .subhead {
-            font-size: 1.3em;
-            margin-bottom: 40px;
             color: var(--color-text-dark);
         }
 
-        .game-description {
-            max-width: 800px;
-            margin: 0 auto 50px auto;
-            font-size: 1.15em;
-            line-height: 1.8;
-            text-align: justify;
+        .feature-item p {
+            font-size: 1.1em;
             color: var(--color-text-dark);
-        }
-
-        .video-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: var(--shadow-medium);
-            margin-bottom: 40px;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
         }
 
         /* Footer */
         .footer {
-            background-color: var(--color-brown-dark);
+            background-color: var(--color-text-dark);
             color: var(--color-white);
             padding: 40px 0;
             text-align: center;
-            margin-top: auto;
+            margin-top: auto; /* Push footer to the bottom */
         }
 
-        .footer .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .footer-brand {
-            font-family: var(--font-heading);
-            font-weight: 700;
-            font-size: 2em;
-            color: var(--color-gold);
-            text-decoration: none;
-            margin-bottom: 20px;
-        }
-
-        .footer-links {
-            list-style: none;
-            display: flex;
-            gap: 25px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .footer-links a {
-            color: var(--color-white);
-            text-decoration: none;
-            font-family: var(--font-body);
-            font-size: 1em;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--color-gold);
-        }
-
-        .social-icons {
-            margin-top: 15px;
-            margin-bottom: 20px;
-        }
-
-        .social-icons a {
-            color: var(--color-white);
-            font-size: 1.5em;
-            margin: 0 12px;
-            transition: color 0.3s ease;
-        }
-
-        .social-icons a:hover {
-            color: var(--color-gold);
-        }
-
-        .footer-copyright {
-            font-family: var(--font-body);
+        .footer p {
+            margin: 0;
             font-size: 0.9em;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer a {
+            color: var(--color-accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--color-white);
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            h1 { font-size: 2.8em; }
+            h1 { font-size: 3em; }
             h2 { font-size: 2em; }
             h3 { font-size: 1.5em; }
 
-            .navbar .container {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-            }
-            .nav-links li {
-                margin: 0;
-            }
-            .navbar .auth-buttons {
-                margin-top: 15px;
-            }
             .hero-section {
-                padding: 80px 20px 50px;
+                padding: 80px 20px;
             }
             .hero-section h1 {
                 font-size: 3.5em;
@@ -539,173 +380,149 @@
             .hero-section .subhead {
                 font-size: 1.2em;
             }
-            .character-details {
-                flex-direction: column;
-                align-items: center;
-            }
-            .character-info {
-                max-width: 100%;
-            }
-            .character-info li strong {
-                min-width: 70px;
-            }
-            .gallery-item img {
+            .character-image-hero {
+                width: 200px;
                 height: 200px;
             }
-            .game-description {
-                text-align: left;
+
+            .nav-links {
+                display: none; /* Hide nav links on small screens */
+            }
+
+            .navbar .container {
+                justify-content: center; /* Center brand if no links */
+            }
+
+            .detail-card, .feature-item {
+                width: 100%; /* Full width on small screens */
             }
         }
 
         @media (max-width: 480px) {
-            h1 { font-size: 2.2em; }
+            h1 { font-size: 2.5em; }
             h2 { font-size: 1.8em; }
-            h3 { font-size: 1.3em; }
-
-            .navbar-brand {
-                font-size: 1.5em;
-            }
-            .nav-links {
-                gap: 10px;
-            }
-            .nav-links a {
-                font-size: 0.95em;
-            }
             .hero-section h1 {
                 font-size: 2.8em;
             }
             .hero-section .subhead {
                 font-size: 1em;
             }
-            .btn {
-                padding: 8px 15px;
-                font-size: 0.9em;
-            }
-            .character-info h3 {
-                font-size: 2em;
-            }
-            .character-info li {
+            .btn-primary {
                 font-size: 1em;
-            }
-            .footer-links {
-                flex-direction: column;
-                gap: 10px;
+                padding: 12px 25px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- ส่วนนำทาง (Navigation Bar) -->
     <nav class="navbar">
         <div class="container">
-            <a href="#" class="navbar-brand">THAI LIFE</a>
+            <a href="#hero" class="navbar-brand">THAI LIFE</a>
             <ul class="nav-links">
                 <li><a href="#hero">หน้าแรก</a></li>
-                <li><a href="#character">ตัวละคร</a></li>
-                <li><a href="#about-game">เกี่ยวกับเกม</a></li>
+                <li><a href="#about-narisara">เกี่ยวกับนริศรา</a></li>
+                <li><a href="#additional-details">ข้อมูลเพิ่มเติม</a></li>
             </ul>
-            <div class="auth-buttons">
-                <a href="#" class="btn btn-secondary">เข้าสู่ระบบ</a>
-                <a href="#" class="btn btn-primary">สมัครสมาชิก</a>
-            </div>
         </div>
     </nav>
 
-    <!-- ส่วนแนะนำ (Hero Section) -->
-    <section id="hero" class="hero-section is-visible">
+    <section id="hero" class="hero-section">
         <div class="container">
-            <h1>นริศรา เรืองประภา: ชีวิตในแบบฉบับไทยที่คุณเลือกได้</h1>
-            <p class="subhead">ก้าวเข้าสู่โลกจำลองที่เต็มไปด้วยเรื่องราว ความฝัน และโอกาสไร้ขีดจำกัด</p>
-            <img src="https://source.unsplash.com/random/800x600/?thai,girl,traditional,costume" alt="นริศรา เรืองประภา" class="hero-character-image">
-            <a href="#about-game" class="btn btn-primary" style="margin-top: 50px;">เริ่มต้นการเดินทาง</a>
+            <img src="https://via.placeholder.com/300x300?text=Narisara" alt="รูปภาพของ นริศรา เรืองประภา" class="character-image-hero">
+            <h1>พบกับ นริศรา เรืองประภา</h1>
+            <p class="subhead">เรื่องราวชีวิตที่รอให้คุณค้นหาในเกม THAI LIFE - เกมจำลองชีวิตในแบบฉบับไทย</p>
+            <a href="#about-narisara" class="btn-primary">เริ่มต้นชีวิตกับนริศรา</a>
         </div>
     </section>
 
-    <!-- ส่วนตัวละคร (Character Section) -->
-    <section id="character" class="character-section">
+    <section id="about-narisara" class="about-narisara">
         <div class="container">
-            <h2>พบกับนริศรา เรืองประภา</h2>
-            <p class="subhead">ทำความรู้จักกับตัวละครหลักที่จะพาคุณผจญภัยในโลกของ THAI LIFE</p>
-
+            <h2>เธอคือใคร?</h2>
+            <p class="subhead">เจาะลึกทุกแง่มุมของนริศรา เรืองประภา ตัวละครหลักที่จะพาคุณไปสัมผัสชีวิตในประเทศไทย</p>
             <div class="character-details">
-                <div class="character-info">
-                    <h3>นริศรา เรืองประภา</h3>
-                    <ul>
-                        <li><strong>อายุ:</strong> 22 ปี</li>
-                        <li><strong>อาชีพ:</strong> นักศึกษา (คณะบริหารธุรกิจ) / พนักงานพาร์ทไทม์</li>
-                        <li><strong>บุคลิก:</strong> ร่าเริง สดใส มีความมุ่งมั่น และชอบช่วยเหลือผู้อื่น</li>
-                        <li><strong>ความฝัน:</strong> อยากเป็นเจ้าของธุรกิจเล็กๆ ของตัวเอง</li>
-                        <li><strong>ภูมิหลัง:</strong> เติบโตมาในครอบครัวอบอุ่นในต่างจังหวัด เพิ่งย้ายเข้ามาเรียนและทำงานในกรุงเทพฯ เพื่อตามหาความฝัน</li>
-                    </ul>
+                <div class="detail-card">
+                    <div class="icon"><i class="fas fa-user-tag"></i></div>
+                    <h3>ชื่อเต็ม</h3>
+                    <p>นริศรา เรืองประภา</p>
                 </div>
-                <div class="character-gallery">
-                    <div class="gallery-item">
-                        <img src="https://source.unsplash.com/random/400x300/?thai,student" alt="นริศราในชุดนักศึกษา">
-                        <div class="gallery-overlay">ชุดนักศึกษา</div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://source.unsplash.com/random/400x300/?thai,cafe,worker" alt="นริศราทำงานพาร์ทไทม์">
-                        <div class="gallery-overlay">ทำงานพาร์ทไทม์</div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://source.unsplash.com/random/400x300/?thai,market,food" alt="นริศราสำรวจตลาด">
-                        <div class="gallery-overlay">สำรวจตลาด</div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://source.unsplash.com/random/400x300/?thai,temple,girl" alt="นริศราเยี่ยมชมวัด">
-                        <div class="gallery-overlay">เยี่ยมชมวัด</div>
-                    </div>
+                <div class="detail-card">
+                    <div class="icon"><i class="fas fa-birthday-cake"></i></div>
+                    <h3>อายุ</h3>
+                    <p>วัยเริ่มต้น (คุณกำหนดได้ในเกม)</p>
+                </div>
+                <div class="detail-card">
+                    <div class="icon"><i class="fas fa-briefcase"></i></div>
+                    <h3>อาชีพเริ่มต้น</h3>
+                    <p>นักเรียน / ยังไม่มีงาน (ขึ้นอยู่กับช่วงวัย)</p>
+                </div>
+                <div class="detail-card">
+                    <div class="icon"><i class="fas fa-heart"></i></div>
+                    <h3>ความสนใจ</h3>
+                    <p>การเรียนรู้, ช่วยเหลือครอบครัว, วัฒนธรรมไทย</p>
+                </div>
+                <div class="detail-card">
+                    <div class="icon"><i class="fas fa-smile"></i></div>
+                    <h3>นิสัย</h3>
+                    <p>เป็นคนร่าเริง, ขยัน, มีน้ำใจ</p>
+                </div>
+                <div class="detail-card">
+                    <div class="icon"><i class="fas fa-home"></i></div>
+                    <h3>ภูมิลำเนา</h3>
+                    <p>ประเทศไทย</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ส่วนเกี่ยวกับเกม (About Game Section) -->
-    <section id="about-game" class="about-game-section">
+    <section id="additional-details" class="additional-details">
         <div class="container">
-            <h2>THAI LIFE: เกมจำลองชีวิตที่ไม่เหมือนใคร</h2>
-            <p class="subhead">สร้างเส้นทางชีวิตของคุณเองในโลกที่เต็มไปด้วยวัฒนธรรมและโอกาส</p>
-            <p class="game-description">
-                THAI LIFE ชวนคุณมาสัมผัสประสบการณ์การใช้ชีวิตในประเทศไทยอย่างสมจริง ไม่ว่าจะเป็นการเรียน การทำงาน การสร้างความสัมพันธ์ หรือการออกสำรวจสถานที่ต่างๆ คุณสามารถตัดสินใจทุกย่างก้าวและสร้างเรื่องราวที่เป็นของคุณเอง
-            </p>
-            <p class="game-description" style="margin-bottom: 50px;">
-                พบกับระบบอาชีพที่หลากหลาย, กิจกรรมทางสังคม, และเทศกาลต่างๆ ที่จะทำให้คุณเพลิดเพลินไปกับเสน่ห์ของไทย
-            </p>
-
-            <div class="video-container">
-                <!-- ใช้ Placeholder ของ YouTube Embed สำหรับวิดีโอตัวอย่าง -->
-                <iframe
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ"
-                    title="YouTube video player"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen>
-                </iframe>
+            <h2>เส้นทางชีวิตที่เลือกได้</h2>
+            <p class="subhead">ทุกการตัดสินใจของคุณ จะกำหนดอนาคตของนริศรา ไม่ว่าจะเป็นการศึกษา ความรัก หรืออาชีพ</p>
+            <div class="game-features">
+                <div class="feature-item">
+                    <div class="icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>การศึกษา</h3>
+                    <p>เลือกเส้นทางการศึกษาตั้งแต่ประถมจนถึงมหาวิทยาลัย หรือเลือกที่จะทำงานสร้างตัว</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon"><i class="fas fa-hands-heart"></i></div>
+                    <h3>ความสัมพันธ์</h3>
+                    <p>สร้างความสัมพันธ์กับเพื่อน ครอบครัว และคู่ชีวิต พบเจอเรื่องราวความรักที่หลากหลาย</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>อาชีพและธุรกิจ</h3>
+                    <p>เลือกอาชีพที่ใช่ หรือเริ่มต้นธุรกิจส่วนตัว สร้างฐานะให้มั่นคงในแบบของคุณ</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon"><i class="fas fa-seedling"></i></div>
+                    <h3>การพัฒนาตนเอง</h3>
+                    <p>ฝึกฝนทักษะ พัฒนาความสามารถ เพื่อปลดล็อกโอกาสใหม่ๆ ในชีวิต</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon"><i class="fas fa-calendar-alt"></i></div>
+                    <h3>เหตุการณ์จริง</h3>
+                    <p>พบกับสถานการณ์และเหตุการณ์ที่อิงจากชีวิตจริงในสังคมไทย</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon"><i class="fas fa-route"></i></div>
+                    <h3>อิสระในการเลือก</h3>
+                    <p>ทุกทางเลือกของคุณมีผลต่อชะตาชีวิตของนริศราอย่างแท้จริง</p>
+                </div>
             </div>
-            <a href="#" class="btn btn-primary">เริ่มเล่น THAI LIFE ตอนนี้!</a>
         </div>
     </section>
 
-    <!-- ส่วนท้าย (Footer) -->
     <footer class="footer">
         <div class="container">
-            <a href="#" class="footer-brand">THAI LIFE</a>
-            <ul class="footer-links">
-                <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
-                <li><a href="#">ข้อกำหนดและเงื่อนไข</a></li>
-            </ul>
-            <div class="social-icons">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-            </div>
-            <p class="footer-copyright">© 2024 THAI LIFE. สงวนลิขสิทธิ์ทุกประการ.</p>
+            <p>THAI LIFE - เกมจำลองชีวิตในแบบของคุณ</p>
+            <p>ลิขสิทธิ์ © 2024 THAI LIFE. สงวนลิขสิทธิ์. | <a href="mailto:info@thailife.game">ติดต่อเรา</a></p>
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Smooth Scrolling
+            // Smooth scrolling for navigation links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -715,41 +532,26 @@
                 });
             });
 
-            // Fade-in on Scroll
-            const sections = document.querySelectorAll('section');
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
+            // Optional: Fade-in animation for sections (currently handled by CSS directly)
+            // const sections = document.querySelectorAll('section:not(#hero)');
+            // const observerOptions = {
+            //     root: null,
+            //     rootMargin: '0px',
+            //     threshold: 0.1
+            // };
 
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
+            // const observer = new IntersectionObserver((entries, observer) => {
+            //     entries.forEach(entry => {
+            //         if (entry.isIntersecting) {
+            //             entry.target.classList.add('is-visible');
+            //             observer.unobserve(entry.target);
+            //         }
+            //     });
+            // }, observerOptions);
 
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-
-            // Auto-play video on scroll (if it's not already playing)
-            const videoContainer = document.querySelector('.video-container iframe');
-            if (videoContainer) {
-                const videoObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            // Video might already be set to autoplay in src, this is a fallback
-                            // For simplicity, we assume autoplay is already in the src for this static page.
-                            // For more robust control in a Flask app, JS can dynamically update src with parameters.
-                        }
-                    });
-                }, { threshold: 0.5 });
-                videoObserver.observe(videoContainer);
-            }
+            // sections.forEach(section => {
+            //     observer.observe(section);
+            // });
         });
     </script>
 </body>
