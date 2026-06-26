@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THAI LIFE: เกมจำลองชีวิตในแบบฉบับไทย</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-gold: #FFD700;
+            --color-green: #4CAF50;
+            --color-blue: #2196F3;
+            --color-beige: #F5F5DC;
+            --color-dark-gray: #333333;
+            --color-white: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            line-height: 1.6;
+            color: var(--color-dark-gray);
+            background-color: var(--color-beige);
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Prompt', sans-serif;
+            color: var(--color-green);
+            margin-bottom: 0.5em;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: transparent;
+            color: var(--color-white);
+            padding: 15px 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: var(--color-green);
+            padding: 10px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .brand {
+            font-family: 'Prompt', sans-serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--color-white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .navbar.scrolled .brand {
+            color: var(--color-white);
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .navbar .nav-links a {
+            color: var(--color-white);
+            text-decoration: none;
+            font-weight: 400;
+            padding: 5px 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-gold);
+            transition: width 0.3s ease;
+        }
+
+        .navbar .nav-links a:hover {
+            color: var(--color-gold);
+        }
+
+        .navbar .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .navbar .btn-primary {
+            background-color: var(--color-gold);
+            color: var(--color-dark-gray);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar .btn-primary:hover {
+            background-color: #e6c000;
+            transform: translateY(-2px);
+        }
+
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(76, 175, 80, 0.7), rgba(76, 175, 80, 0.7)), url('https://images.unsplash.com/photo-1549646001-c52998a442ae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            color: var(--color-white);
+            text-align: center;
+            padding: 150px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fade-in-up 1s ease-out forwards 0.5s;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            color: var(--color-white);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero h2 {
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            color: var(--color-white);
+            font-weight: 400;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.1em;
+            margin-bottom: 40px;
+            color: var(--color-white);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+        }
+
+        .hero .btn-secondary {
+            background-color: var(--color-gold);
+            color: var(--color-dark-gray);
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero .btn-secondary:hover {
+            background-color: #e6c000;
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        /* General Section Styling */
+        .section {
+            padding: 80px 0;
+            background-color: var(--color-beige);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section:nth-of-type(even) {
+            background-color: var(--color-white);
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 10px;
+            color: var(--color-green);
+        }
+
+        .section-subtitle {
+            font-size: 1.3em;
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--color-dark-gray);
+            font-weight: 400;
+        }
+
+        /* About Section */
+        #about .about-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        #about .about-text {
+            flex: 1;
+        }
+
+        #about .about-text p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        #about .about-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        #about .about-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Features Section */
+        #features .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        #features .feature-item {
+            background-color: var(--color-white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #features .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        #features .feature-item .icon {
+            font-size: 3em;
+            color: var(--color-blue);
+            margin-bottom: 20px;
+        }
+
+        #features .feature-item h3 {
+            font-size: 1.5em;
+            color: var(--color-green);
+            margin-bottom: 15px;
+        }
+
+        #features .feature-item p {
+            font-size: 1em;
+            color: var(--color-dark-gray);
+        }
+
+        /* Development Updates Section */
+        #development .development-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #development .development-content p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--color-dark-gray);
+            color: var(--color-white);
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .footer .social-links a {
+            color: var(--color-white);
+            font-size: 1.5em;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer .social-links a:hover {
+            color: var(--color-gold);
+        }
+
+        .footer p {
+            margin-top: 15px;
+        }
+
+        /* Animations */
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar .nav-links {
+                display: none; /* Hide nav links on small screens */
+            }
+
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero h2 {
+                font-size: 1.3em;
+            }
+
+            .hero p {
+                font-size: 1em;
+            }
+
+            #about .about-content {
+                flex-direction: column;
+            }
+            #about .about-image {
+                order: -1; /* Image above text on mobile */
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .section-title {
+                font-size: 2em;
+            }
+
+            .section-subtitle {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="brand">THAI LIFE</a>
+            <ul class="nav-links">
+                <li><a href="#hero">หน้าแรก</a></li>
+                <li><a href="#about">เกี่ยวกับเกม</a></li>
+                <li><a href="#features">ฟีเจอร์</a></li>
+                <li><a href="#development">ติดตามการพัฒนา</a></li>
+            </ul>
+            <a href="#" class="btn-primary">เริ่มเล่น (เร็วๆ นี้)</a>
+        </div>
+    </nav>
+
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>ชีวิตสไตล์ไทยในมือคุณ: เกมจำลองชีวิตที่ไม่เหมือนใคร</h1>
+            <h2>สัมผัสประสบการณ์ชีวิตในเมืองไทย สร้างเรื่องราวของคุณเอง</h2>
+            <p>เตรียมพบกับเกมจำลองชีวิตที่จะพาคุณดำดิ่งสู่โลกแห่งวัฒนธรรมไทย กิจกรรมมากมาย และการตัดสินใจที่จะกำหนดเส้นทางชีวิตของคุณ</p>
+            <a href="#" class="btn-secondary">ดูตัวอย่างเกม</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">สร้างชีวิตในแบบของคุณ</h2>
+            <h3 class="section-subtitle">ทุกการตัดสินใจนำไปสู่เส้นทางที่แตกต่าง</h3>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>เรากำลังพัฒนาเกมจำลองชีวิตที่เน้นความสมจริง ผู้เล่นจะได้สัมผัสกับการใช้ชีวิตประจำวันแบบไทยๆ ตั้งแต่การทำงาน การเข้าสังคม ไปจนถึงการจัดการทรัพยากรส่วนตัว ไม่ว่าจะเป็นเงิน พลังงาน หรืออารมณ์ของคุณ</p>
+                    <p>ปลดปล่อยจินตนาการของคุณและสร้างเรื่องราวที่ไม่เหมือนใครในโลกที่เต็มไปด้วยสีสันและวัฒนธรรมไทยที่งดงาม</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://via.placeholder.com/600x400/4CAF50/F5F5DC?text=Concept+Art+Thai+Life" alt="Concept Art Thai Life Game">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="section">
+        <div class="container">
+            <h2 class="section-title">ฟีเจอร์ที่น่าสนใจ</h2>
+            <h3 class="section-subtitle">มากกว่าแค่การจำลอง: นี่คือโลกของคุณ</h3>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="icon">💰</div>
+                    <h3>การจัดการสถานะผู้เล่น</h3>
+                    <p>ควบคุมเงิน พลังงาน อารมณ์ และของในกระเป๋าอย่างใกล้ชิด ทุกการกระทำส่งผลต่อชีวิตของคุณ</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">⏰</div>
+                    <h3>ระบบเวลาและกิจกรรม</h3>
+                    <p>สัมผัสชีวิตประจำวันที่หมุนไปพร้อมกิจกรรมต่างๆ ตลอดวัน เช้า กลางวัน เย็น ค่ำ</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">🧑‍🎨</div>
+                    <h3>การปรับแต่งตัวละคร</h3>
+                    <p>สร้างตัวละครในฝันของคุณด้วยตัวเลือกการปรับแต่งที่หลากหลาย</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">🤝</div>
+                    <h3>การโต้ตอบกับ NPC</h3>
+                    <p>พบปะผู้คน สร้างความสัมพันธ์ และปลดล็อกเรื่องราวใหม่ๆ ในแต่ละวัน</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="development" class="section">
+        <div class="container">
+            <h2 class="section-title">เรากำลังไปถึงไหนแล้ว?</h2>
+            <h3 class="section-subtitle">ความคืบหน้าล่าสุดจากทีมพัฒนา</h3>
+            <div class="development-content">
+                <p>ทีมงานของเรากำลังทำงานอย่างขยันขันแข็งเพื่อบูรณาการโค้ด HTML เข้ากับโครงสร้างเกม ปรับปรุงคลาส Player ให้มีความซับซ้อนยิ่งขึ้นด้วยระบบเงิน พลังงาน อารมณ์ และปรับปรุงคลาส Game เพื่อเพิ่มระบบเวลาภายในวัน เรามุ่งมั่นที่จะมอบประสบการณ์ที่สมจริงที่สุดให้แก่คุณ</p>
+                <a href="#" class="btn-primary">ติดตามข่าวสาร</a> <!-- เปลี่ยนเป็นลิงก์ Discord หรือสมัครรับข่าวสารในอนาคต -->
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="social-links">
+                <!-- เพิ่มลิงก์โซเชียลมีเดียในอนาคต -->
+                <!-- <a href="#"><i class="fab fa-facebook-f"></i></a> -->
+                <!-- <a href="#"><i class="fab fa-instagram"></i></a> -->
+            </div>
+            <p>&copy; 2024 THAI LIFE. สงวนลิขสิทธิ์</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Fade-in on scroll effect for sections
+        const sections = document.querySelectorAll('.section');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const sectionObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Stop observing once it's visible
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('.nav-links a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
