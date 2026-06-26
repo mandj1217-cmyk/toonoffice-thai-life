@@ -3,62 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THAI LIFE: เกมจำลองชีวิตในแบบฉบับไทย</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <title>THAI LIFE: นริศรา เรืองประภา - เกมจำลองชีวิตในแบบฉบับไทย</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&family=Prompt:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
             --color-gold: #FFD700;
-            --color-green: #4CAF50;
-            --color-blue: #2196F3;
+            --color-brown-dark: #8B4513;
+            --color-blue-light: #ADD8E6;
             --color-beige: #F5F5DC;
-            --color-dark-gray: #333333;
+            --color-text-dark: #333333;
             --color-white: #FFFFFF;
+
+            --font-heading: 'Sarabun', sans-serif;
+            --font-body: 'Prompt', sans-serif;
+
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.12);
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Sarabun', sans-serif;
-            line-height: 1.6;
-            color: var(--color-dark-gray);
-            background-color: var(--color-beige);
+        html {
             scroll-behavior: smooth;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Prompt', sans-serif;
-            color: var(--color-green);
-            margin-bottom: 0.5em;
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            color: var(--color-text-dark);
+            background-color: var(--color-beige);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            color: var(--color-brown-dark);
+            margin-bottom: 0.8em;
+            font-weight: 700;
+        }
+
+        h1 { font-size: 3.5em; line-height: 1.2; }
+        h2 { font-size: 2.5em; }
+        h3 { font-size: 1.8em; }
+        p { margin-bottom: 1em; }
+
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 25px;
+        }
+
+        section {
+            padding: 80px 0;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Navigation Bar */
         .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background-color: transparent;
-            color: var(--color-white);
+            background-color: var(--color-white);
             padding: 15px 0;
+            box-shadow: var(--shadow-light);
+            position: sticky;
+            top: 0;
             z-index: 1000;
-            transition: background-color 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            background-color: var(--color-green);
-            padding: 10px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .navbar .container {
@@ -67,469 +90,666 @@
             align-items: center;
         }
 
-        .navbar .brand {
-            font-family: 'Prompt', sans-serif;
-            font-size: 1.8em;
+        .navbar-brand {
+            font-family: var(--font-heading);
             font-weight: 700;
-            color: var(--color-white);
+            font-size: 1.8em;
+            color: var(--color-brown-dark);
             text-decoration: none;
             transition: color 0.3s ease;
         }
-        
-        .navbar.scrolled .brand {
-            color: var(--color-white);
+
+        .navbar-brand:hover {
+            color: var(--color-gold);
         }
 
-        .navbar .nav-links {
+        .nav-links {
             list-style: none;
             display: flex;
-            gap: 30px;
         }
 
-        .navbar .nav-links a {
-            color: var(--color-white);
-            text-decoration: none;
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            font-family: var(--font-body);
             font-weight: 400;
-            padding: 5px 0;
+            color: var(--color-brown-dark);
+            text-decoration: none;
+            font-size: 1.1em;
             position: relative;
             transition: color 0.3s ease;
         }
 
-        .navbar .nav-links a::after {
+        .nav-links a::after {
             content: '';
             position: absolute;
             left: 0;
-            bottom: 0;
+            bottom: -5px;
             width: 0;
             height: 2px;
             background-color: var(--color-gold);
             transition: width 0.3s ease;
         }
 
-        .navbar .nav-links a:hover {
+        .nav-links a:hover {
             color: var(--color-gold);
         }
 
-        .navbar .nav-links a:hover::after {
+        .nav-links a:hover::after {
             width: 100%;
         }
 
-        .navbar .btn-primary {
-            background-color: var(--color-gold);
-            color: var(--color-dark-gray);
+        .navbar .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-block;
             padding: 10px 20px;
-            border-radius: 25px;
-            text-decoration: none;
+            border-radius: 8px;
+            font-family: var(--font-body);
             font-weight: 700;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 1em;
+            border: none;
         }
 
-        .navbar .btn-primary:hover {
-            background-color: #e6c000;
+        .btn-primary {
+            background-color: var(--color-gold);
+            color: var(--color-white);
+            box-shadow: var(--shadow-light);
+        }
+
+        .btn-primary:hover {
+            background-color: #e6b800; /* Darker gold */
             transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
         }
 
+        .btn-secondary {
+            background-color: var(--color-blue-light);
+            color: var(--color-brown-dark);
+            box-shadow: var(--shadow-light);
+        }
+
+        .btn-secondary:hover {
+            background-color: #9ac9e0; /* Darker light blue */
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
 
         /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(76, 175, 80, 0.7), rgba(76, 175, 80, 0.7)), url('https://images.unsplash.com/photo-1549646001-c52998a442ae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
-            color: var(--color-white);
+        .hero-section {
+            background: linear-gradient(135deg, var(--color-beige) 0%, var(--color-blue-light) 100%);
+            color: var(--color-brown-dark);
             text-align: center;
-            padding: 150px 20px;
-            min-height: 100vh;
+            padding: 120px 25px 80px;
+            min-height: 85vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
             position: relative;
             overflow: hidden;
         }
 
-        .hero::before {
+        .hero-section::before {
             content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--color-gold) 0%, rgba(255,215,0,0) 70%);
+            opacity: 0.1;
+            animation: moveLight1 15s infinite alternate ease-in-out;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, var(--color-brown-dark) 0%, rgba(139,69,19,0) 70%);
+            opacity: 0.05;
+            animation: moveLight2 18s infinite alternate-reverse ease-in-out;
+        }
+
+        @keyframes moveLight1 {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, 50px) scale(1.1); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        @keyframes moveLight2 {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-40px, -40px) scale(1.05); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        .hero-section h1 {
+            color: var(--color-brown-dark);
+            margin-bottom: 15px;
+            font-size: 4.8em;
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.15);
+        }
+
+        .hero-section .subhead {
+            font-family: var(--font-body);
+            font-weight: 400;
+            font-size: 1.6em;
+            margin-bottom: 40px;
+            color: var(--color-text-dark);
+            max-width: 800px;
+        }
+
+        .hero-character-image {
+            width: 100%;
+            max-width: 550px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: var(--shadow-medium);
+            margin-top: 40px;
+            animation: floatImage 6s ease-in-out infinite;
+        }
+
+        @keyframes floatImage {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Character Section */
+        .character-section {
+            background-color: var(--color-white);
+            padding: 80px 0;
+            text-align: center;
+            box-shadow: inset 0 8px 15px -8px rgba(0,0,0,0.05), inset 0 -8px 15px -8px rgba(0,0,0,0.05);
+        }
+
+        .character-section h2 {
+            color: var(--color-gold);
+            margin-bottom: 10px;
+            font-size: 3em;
+        }
+
+        .character-section .subhead {
+            font-size: 1.3em;
+            margin-bottom: 50px;
+            color: var(--color-text-dark);
+        }
+
+        .character-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .character-info {
+            flex: 1 1 300px;
+            background-color: var(--color-beige);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow-light);
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            min-width: 280px;
+            max-width: 450px;
+        }
+
+        .character-info:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .character-info h3 {
+            color: var(--color-brown-dark);
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .character-info ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .character-info li {
+            font-family: var(--font-body);
+            font-size: 1.15em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            line-height: 1.5;
+            color: var(--color-text-dark);
+        }
+
+        .character-info li strong {
+            color: var(--color-brown-dark);
+            min-width: 90px; /* เพื่อจัดแนวข้อความ */
+            margin-right: 10px;
+            font-weight: 700;
+        }
+
+        .character-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%);
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fade-in-up 1s ease-out forwards 0.5s;
-        }
-
-        .hero h1 {
-            font-size: 3.5em;
-            margin-bottom: 15px;
+            background-color: rgba(0, 0, 0, 0.4);
             color: var(--color-white);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .hero h2 {
-            font-size: 1.8em;
-            margin-bottom: 30px;
-            color: var(--color-white);
-            font-weight: 400;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-        }
-
-        .hero p {
-            font-size: 1.1em;
-            margin-bottom: 40px;
-            color: var(--color-white);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
-        }
-
-        .hero .btn-secondary {
-            background-color: var(--color-gold);
-            color: var(--color-dark-gray);
-            padding: 15px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1em;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero .btn-secondary:hover {
-            background-color: #e6c000;
-            transform: translateY(-3px) scale(1.02);
-        }
-
-        /* General Section Styling */
-        .section {
-            padding: 80px 0;
-            background-color: var(--color-beige);
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section:nth-of-type(even) {
-            background-color: var(--color-white);
-        }
-
-        .section-title {
-            font-size: 2.5em;
-            text-align: center;
-            margin-bottom: 10px;
-            color: var(--color-green);
-        }
-
-        .section-subtitle {
-            font-size: 1.3em;
-            text-align: center;
-            margin-bottom: 60px;
-            color: var(--color-dark-gray);
-            font-weight: 400;
-        }
-
-        /* About Section */
-        #about .about-content {
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 40px;
-            margin-top: 40px;
+            font-family: var(--font-body);
+            font-size: 1.2em;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        #about .about-text {
-            flex: 1;
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
         }
 
-        #about .about-text p {
-            font-size: 1.1em;
-            margin-bottom: 20px;
-        }
-
-        #about .about-image {
-            flex: 1;
+        /* About Game Section */
+        .about-game-section {
+            background: linear-gradient(135deg, var(--color-blue-light) 0%, var(--color-beige) 100%);
+            padding: 80px 0;
             text-align: center;
         }
 
-        #about .about-image img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Features Section */
-        #features .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        #features .feature-item {
-            background-color: var(--color-white);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        #features .feature-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        #features .feature-item .icon {
+        .about-game-section h2 {
+            color: var(--color-brown-dark);
+            margin-bottom: 10px;
             font-size: 3em;
-            color: var(--color-blue);
-            margin-bottom: 20px;
         }
 
-        #features .feature-item h3 {
-            font-size: 1.5em;
-            color: var(--color-green);
-            margin-bottom: 15px;
+        .about-game-section .subhead {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            color: var(--color-text-dark);
         }
 
-        #features .feature-item p {
-            font-size: 1em;
-            color: var(--color-dark-gray);
-        }
-
-        /* Development Updates Section */
-        #development .development-content {
+        .game-description {
             max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
+            margin: 0 auto 50px auto;
+            font-size: 1.15em;
+            line-height: 1.8;
+            text-align: justify;
+            color: var(--color-text-dark);
         }
 
-        #development .development-content p {
-            font-size: 1.1em;
-            margin-bottom: 30px;
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            margin-bottom: 40px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
 
         /* Footer */
         .footer {
-            background-color: var(--color-dark-gray);
+            background-color: var(--color-brown-dark);
             color: var(--color-white);
             padding: 40px 0;
             text-align: center;
-            font-size: 0.9em;
+            margin-top: auto;
         }
 
-        .footer .social-links a {
+        .footer .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 2em;
+            color: var(--color-gold);
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
             color: var(--color-white);
-            font-size: 1.5em;
-            margin: 0 10px;
+            text-decoration: none;
+            font-family: var(--font-body);
+            font-size: 1em;
             transition: color 0.3s ease;
         }
 
-        .footer .social-links a:hover {
+        .footer-links a:hover {
             color: var(--color-gold);
         }
 
-        .footer p {
+        .social-icons {
             margin-top: 15px;
+            margin-bottom: 20px;
         }
 
-        /* Animations */
-        @keyframes fade-in-up {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .social-icons a {
+            color: var(--color-white);
+            font-size: 1.5em;
+            margin: 0 12px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--color-gold);
+        }
+
+        .footer-copyright {
+            font-family: var(--font-body);
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.8);
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .navbar .nav-links {
-                display: none; /* Hide nav links on small screens */
-            }
+            h1 { font-size: 2.8em; }
+            h2 { font-size: 2em; }
+            h3 { font-size: 1.5em; }
 
             .navbar .container {
                 flex-direction: column;
                 gap: 15px;
             }
-
-            .hero h1 {
-                font-size: 2.5em;
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
             }
-
-            .hero h2 {
-                font-size: 1.3em;
+            .nav-links li {
+                margin: 0;
             }
+            .navbar .auth-buttons {
+                margin-top: 15px;
+            }
+            .hero-section {
+                padding: 80px 20px 50px;
+            }
+            .hero-section h1 {
+                font-size: 3.5em;
+            }
+            .hero-section .subhead {
+                font-size: 1.2em;
+            }
+            .character-details {
+                flex-direction: column;
+                align-items: center;
+            }
+            .character-info {
+                max-width: 100%;
+            }
+            .character-info li strong {
+                min-width: 70px;
+            }
+            .gallery-item img {
+                height: 200px;
+            }
+            .game-description {
+                text-align: left;
+            }
+        }
 
-            .hero p {
+        @media (max-width: 480px) {
+            h1 { font-size: 2.2em; }
+            h2 { font-size: 1.8em; }
+            h3 { font-size: 1.3em; }
+
+            .navbar-brand {
+                font-size: 1.5em;
+            }
+            .nav-links {
+                gap: 10px;
+            }
+            .nav-links a {
+                font-size: 0.95em;
+            }
+            .hero-section h1 {
+                font-size: 2.8em;
+            }
+            .hero-section .subhead {
                 font-size: 1em;
             }
-
-            #about .about-content {
-                flex-direction: column;
+            .btn {
+                padding: 8px 15px;
+                font-size: 0.9em;
             }
-            #about .about-image {
-                order: -1; /* Image above text on mobile */
-            }
-
-            .section {
-                padding: 60px 0;
-            }
-
-            .section-title {
+            .character-info h3 {
                 font-size: 2em;
             }
-
-            .section-subtitle {
-                font-size: 1.1em;
+            .character-info li {
+                font-size: 1em;
+            }
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- ส่วนนำทาง (Navigation Bar) -->
     <nav class="navbar">
         <div class="container">
-            <a href="#" class="brand">THAI LIFE</a>
+            <a href="#" class="navbar-brand">THAI LIFE</a>
             <ul class="nav-links">
                 <li><a href="#hero">หน้าแรก</a></li>
-                <li><a href="#about">เกี่ยวกับเกม</a></li>
-                <li><a href="#features">ฟีเจอร์</a></li>
-                <li><a href="#development">ติดตามการพัฒนา</a></li>
+                <li><a href="#character">ตัวละคร</a></li>
+                <li><a href="#about-game">เกี่ยวกับเกม</a></li>
             </ul>
-            <a href="#" class="btn-primary">เริ่มเล่น (เร็วๆ นี้)</a>
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-secondary">เข้าสู่ระบบ</a>
+                <a href="#" class="btn btn-primary">สมัครสมาชิก</a>
+            </div>
         </div>
     </nav>
 
-    <section id="hero" class="hero">
-        <div class="hero-content">
-            <h1>ชีวิตสไตล์ไทยในมือคุณ: เกมจำลองชีวิตที่ไม่เหมือนใคร</h1>
-            <h2>สัมผัสประสบการณ์ชีวิตในเมืองไทย สร้างเรื่องราวของคุณเอง</h2>
-            <p>เตรียมพบกับเกมจำลองชีวิตที่จะพาคุณดำดิ่งสู่โลกแห่งวัฒนธรรมไทย กิจกรรมมากมาย และการตัดสินใจที่จะกำหนดเส้นทางชีวิตของคุณ</p>
-            <a href="#" class="btn-secondary">ดูตัวอย่างเกม</a>
+    <!-- ส่วนแนะนำ (Hero Section) -->
+    <section id="hero" class="hero-section is-visible">
+        <div class="container">
+            <h1>นริศรา เรืองประภา: ชีวิตในแบบฉบับไทยที่คุณเลือกได้</h1>
+            <p class="subhead">ก้าวเข้าสู่โลกจำลองที่เต็มไปด้วยเรื่องราว ความฝัน และโอกาสไร้ขีดจำกัด</p>
+            <img src="https://source.unsplash.com/random/800x600/?thai,girl,traditional,costume" alt="นริศรา เรืองประภา" class="hero-character-image">
+            <a href="#about-game" class="btn btn-primary" style="margin-top: 50px;">เริ่มต้นการเดินทาง</a>
         </div>
     </section>
 
-    <section id="about" class="section">
+    <!-- ส่วนตัวละคร (Character Section) -->
+    <section id="character" class="character-section">
         <div class="container">
-            <h2 class="section-title">สร้างชีวิตในแบบของคุณ</h2>
-            <h3 class="section-subtitle">ทุกการตัดสินใจนำไปสู่เส้นทางที่แตกต่าง</h3>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>เรากำลังพัฒนาเกมจำลองชีวิตที่เน้นความสมจริง ผู้เล่นจะได้สัมผัสกับการใช้ชีวิตประจำวันแบบไทยๆ ตั้งแต่การทำงาน การเข้าสังคม ไปจนถึงการจัดการทรัพยากรส่วนตัว ไม่ว่าจะเป็นเงิน พลังงาน หรืออารมณ์ของคุณ</p>
-                    <p>ปลดปล่อยจินตนาการของคุณและสร้างเรื่องราวที่ไม่เหมือนใครในโลกที่เต็มไปด้วยสีสันและวัฒนธรรมไทยที่งดงาม</p>
+            <h2>พบกับนริศรา เรืองประภา</h2>
+            <p class="subhead">ทำความรู้จักกับตัวละครหลักที่จะพาคุณผจญภัยในโลกของ THAI LIFE</p>
+
+            <div class="character-details">
+                <div class="character-info">
+                    <h3>นริศรา เรืองประภา</h3>
+                    <ul>
+                        <li><strong>อายุ:</strong> 22 ปี</li>
+                        <li><strong>อาชีพ:</strong> นักศึกษา (คณะบริหารธุรกิจ) / พนักงานพาร์ทไทม์</li>
+                        <li><strong>บุคลิก:</strong> ร่าเริง สดใส มีความมุ่งมั่น และชอบช่วยเหลือผู้อื่น</li>
+                        <li><strong>ความฝัน:</strong> อยากเป็นเจ้าของธุรกิจเล็กๆ ของตัวเอง</li>
+                        <li><strong>ภูมิหลัง:</strong> เติบโตมาในครอบครัวอบอุ่นในต่างจังหวัด เพิ่งย้ายเข้ามาเรียนและทำงานในกรุงเทพฯ เพื่อตามหาความฝัน</li>
+                    </ul>
                 </div>
-                <div class="about-image">
-                    <img src="https://via.placeholder.com/600x400/4CAF50/F5F5DC?text=Concept+Art+Thai+Life" alt="Concept Art Thai Life Game">
+                <div class="character-gallery">
+                    <div class="gallery-item">
+                        <img src="https://source.unsplash.com/random/400x300/?thai,student" alt="นริศราในชุดนักศึกษา">
+                        <div class="gallery-overlay">ชุดนักศึกษา</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://source.unsplash.com/random/400x300/?thai,cafe,worker" alt="นริศราทำงานพาร์ทไทม์">
+                        <div class="gallery-overlay">ทำงานพาร์ทไทม์</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://source.unsplash.com/random/400x300/?thai,market,food" alt="นริศราสำรวจตลาด">
+                        <div class="gallery-overlay">สำรวจตลาด</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://source.unsplash.com/random/400x300/?thai,temple,girl" alt="นริศราเยี่ยมชมวัด">
+                        <div class="gallery-overlay">เยี่ยมชมวัด</div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="features" class="section">
+    <!-- ส่วนเกี่ยวกับเกม (About Game Section) -->
+    <section id="about-game" class="about-game-section">
         <div class="container">
-            <h2 class="section-title">ฟีเจอร์ที่น่าสนใจ</h2>
-            <h3 class="section-subtitle">มากกว่าแค่การจำลอง: นี่คือโลกของคุณ</h3>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <div class="icon">💰</div>
-                    <h3>การจัดการสถานะผู้เล่น</h3>
-                    <p>ควบคุมเงิน พลังงาน อารมณ์ และของในกระเป๋าอย่างใกล้ชิด ทุกการกระทำส่งผลต่อชีวิตของคุณ</p>
-                </div>
-                <div class="feature-item">
-                    <div class="icon">⏰</div>
-                    <h3>ระบบเวลาและกิจกรรม</h3>
-                    <p>สัมผัสชีวิตประจำวันที่หมุนไปพร้อมกิจกรรมต่างๆ ตลอดวัน เช้า กลางวัน เย็น ค่ำ</p>
-                </div>
-                <div class="feature-item">
-                    <div class="icon">🧑‍🎨</div>
-                    <h3>การปรับแต่งตัวละคร</h3>
-                    <p>สร้างตัวละครในฝันของคุณด้วยตัวเลือกการปรับแต่งที่หลากหลาย</p>
-                </div>
-                <div class="feature-item">
-                    <div class="icon">🤝</div>
-                    <h3>การโต้ตอบกับ NPC</h3>
-                    <p>พบปะผู้คน สร้างความสัมพันธ์ และปลดล็อกเรื่องราวใหม่ๆ ในแต่ละวัน</p>
-                </div>
+            <h2>THAI LIFE: เกมจำลองชีวิตที่ไม่เหมือนใคร</h2>
+            <p class="subhead">สร้างเส้นทางชีวิตของคุณเองในโลกที่เต็มไปด้วยวัฒนธรรมและโอกาส</p>
+            <p class="game-description">
+                THAI LIFE ชวนคุณมาสัมผัสประสบการณ์การใช้ชีวิตในประเทศไทยอย่างสมจริง ไม่ว่าจะเป็นการเรียน การทำงาน การสร้างความสัมพันธ์ หรือการออกสำรวจสถานที่ต่างๆ คุณสามารถตัดสินใจทุกย่างก้าวและสร้างเรื่องราวที่เป็นของคุณเอง
+            </p>
+            <p class="game-description" style="margin-bottom: 50px;">
+                พบกับระบบอาชีพที่หลากหลาย, กิจกรรมทางสังคม, และเทศกาลต่างๆ ที่จะทำให้คุณเพลิดเพลินไปกับเสน่ห์ของไทย
+            </p>
+
+            <div class="video-container">
+                <!-- ใช้ Placeholder ของ YouTube Embed สำหรับวิดีโอตัวอย่าง -->
+                <iframe
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
             </div>
+            <a href="#" class="btn btn-primary">เริ่มเล่น THAI LIFE ตอนนี้!</a>
         </div>
     </section>
 
-    <section id="development" class="section">
-        <div class="container">
-            <h2 class="section-title">เรากำลังไปถึงไหนแล้ว?</h2>
-            <h3 class="section-subtitle">ความคืบหน้าล่าสุดจากทีมพัฒนา</h3>
-            <div class="development-content">
-                <p>ทีมงานของเรากำลังทำงานอย่างขยันขันแข็งเพื่อบูรณาการโค้ด HTML เข้ากับโครงสร้างเกม ปรับปรุงคลาส Player ให้มีความซับซ้อนยิ่งขึ้นด้วยระบบเงิน พลังงาน อารมณ์ และปรับปรุงคลาส Game เพื่อเพิ่มระบบเวลาภายในวัน เรามุ่งมั่นที่จะมอบประสบการณ์ที่สมจริงที่สุดให้แก่คุณ</p>
-                <a href="#" class="btn-primary">ติดตามข่าวสาร</a> <!-- เปลี่ยนเป็นลิงก์ Discord หรือสมัครรับข่าวสารในอนาคต -->
-            </div>
-        </div>
-    </section>
-
+    <!-- ส่วนท้าย (Footer) -->
     <footer class="footer">
         <div class="container">
-            <div class="social-links">
-                <!-- เพิ่มลิงก์โซเชียลมีเดียในอนาคต -->
-                <!-- <a href="#"><i class="fab fa-facebook-f"></i></a> -->
-                <!-- <a href="#"><i class="fab fa-instagram"></i></a> -->
+            <a href="#" class="footer-brand">THAI LIFE</a>
+            <ul class="footer-links">
+                <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+                <li><a href="#">ข้อกำหนดและเงื่อนไข</a></li>
+            </ul>
+            <div class="social-icons">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
             </div>
-            <p>&copy; 2024 THAI LIFE. สงวนลิขสิทธิ์</p>
+            <p class="footer-copyright">© 2024 THAI LIFE. สงวนลิขสิทธิ์ทุกประการ.</p>
         </div>
     </footer>
 
     <script>
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Fade-in on scroll effect for sections
-        const sections = document.querySelectorAll('.section');
-
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const sectionObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target); // Stop observing once it's visible
-                }
-            });
-        }, observerOptions);
-
-        sections.forEach(section => {
-            sectionObserver.observe(section);
-        });
-
-        // Smooth scroll for navigation links
-        document.querySelectorAll('.nav-links a').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth Scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 });
             });
+
+            // Fade-in on Scroll
+            const sections = document.querySelectorAll('section');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // Auto-play video on scroll (if it's not already playing)
+            const videoContainer = document.querySelector('.video-container iframe');
+            if (videoContainer) {
+                const videoObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Video might already be set to autoplay in src, this is a fallback
+                            // For simplicity, we assume autoplay is already in the src for this static page.
+                            // For more robust control in a Flask app, JS can dynamically update src with parameters.
+                        }
+                    });
+                }, { threshold: 0.5 });
+                videoObserver.observe(videoContainer);
+            }
         });
     </script>
 </body>
